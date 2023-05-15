@@ -5,10 +5,10 @@ import os
 import glob
 
 path = {
-    'tcp_path': '/proc/net/tcp',
-    'tcp6_path': '/proc/net/tcp6',
-    'udp_path': '/proc/net/udp',
-    'udp6_path': '/proc/net/udp6',
+    'tcp': '/proc/net/tcp',
+    'tcp6': '/proc/net/tcp6',
+    'udp': '/proc/net/udp',
+    'udp6': '/proc/net/udp6',
 }
 
 stat = {
@@ -34,8 +34,9 @@ header = {
     'pid': 'PID/Program name'
 }
 
-def procfs():
-    with open(path['tcp_path']) as file:
+def procfs(file_path):
+    with open(file_path) as file:
+        file.readline()
         return [line.rstrip() for line in file]
 
 def _hex2dec(hex):
@@ -64,21 +65,24 @@ def format_line(data):
     return (("%(proto)-5s %(local_addr)25s %(remote_addr)25s %(state)18s %(pid)50s" % data) + "\n")
 
 if __name__ == '__main__':
-    data = procfs()
 
     sys.stderr.write(format_line(header))
 
-    return_data = []
-    for info in data[1:]:
-        row = re.split(r'\s+', info)[1:]
+    for protocol in path:
+        data = procfs(path[protocol])
 
-        _seq = {
-            'proto': 'tcp',
-            'local_addr': _conver_linux_net_address(row[1]),
-            'remote_addr': _conver_linux_net_address(row[2]),
-            'state': stat[row[3]],
-            'pid': "{}/{}".format(row[7], _inode2system(row[9]))
-        }
+        return_data = []
+        for info in data[1:]:
+            row = re.split(r'\s+', info)[1:]
 
-        if len(_seq) > 0 :
-            sys.stdout.write(format_line(_seq))
+            if row != None:
+                _seq = {
+                    'proto': protocol,
+                    'local_addr': _conver_linux_net_address(row[1]),
+                    'remote_addr': _conver_linux_net_address(row[2]),
+                    'state': stat[row[3]],
+                    'pid': "{}/{}".format(row[7], _inode2system(row[9]))
+                }
+
+                if len(_seq) > 0 :
+                    sys.stdout.write(format_line(_seq))
