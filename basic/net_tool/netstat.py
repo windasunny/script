@@ -3,7 +3,6 @@ import sys
 import re
 import os
 import glob
-from server.tcp import listen
 
 
 class Netstat:
@@ -38,8 +37,7 @@ class Netstat:
         'pid': 'PID/Program name'
     }
 
-    def __init__(self, args) -> None:
-        self.args = args
+    def __init__(self) -> None:
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
@@ -73,7 +71,7 @@ class Netstat:
     def _format_line(self, data):
         return (("%(proto)-5s %(local_addr)25s %(remote_addr)25s %(state)18s %(pid)50s" % data) + "\n")
 
-    def _exec(self):
+    def exec(self):
         sys.stderr.write(self._format_line(self.header))
 
         for protocol in self.path:
@@ -93,12 +91,3 @@ class Netstat:
 
                     if len(_seq) > 0:
                         sys.stdout.write(self._format_line(_seq))
-
-    def run(self):
-        host = self.args.host
-        port = self.args.port
-
-        if not host or not port:
-            self._exec()
-        else:
-            pass

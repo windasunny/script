@@ -1,0 +1,3 @@
+from metasploit import module
+
+
