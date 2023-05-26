@@ -14,15 +14,15 @@ def list():
     netcat.exec()
 
 
-@netstat.command("listen", help="nestat listen...")
-@click.option('-H', '--host', type=str, help="host name")
-@click.option('-P', '--port', type=int, help="port number")
+@netstat.command("listen", help="listen {host}:{port}")
+@click.option("-H", "--host", type=str, help="host name")
+@click.option("-P", "--port", type=int, help="port number")
 def listen(host: str, port: int):
     tcp_listen(host, port)
 
 
 @netstat.command("validator", help="nestat listen...")
-@click.option('-H', '--host', type=str, help="host name")
-@click.option('-P', '--port', type=int, help="port number")
+@click.option("-H", "--host", type=str, help="host name")
+@click.option("-P", "--port", type=int, help="port number")
 def validator(host: str, port: int):
     pass
