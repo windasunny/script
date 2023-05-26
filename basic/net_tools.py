@@ -8,8 +8,8 @@ def netstat():
     pass
 
 
-@netstat.command("show", help="nestat show...")
-def show():
+@netstat.command("list", help="list tcp/tcp6/udp/udp6 all host:port connected")
+def list():
     netcat = Netstat()
     netcat.exec()
 
