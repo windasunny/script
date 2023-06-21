@@ -1,6 +1,7 @@
 import click
 from basic.net_tool.netstat import Netstat
 from basic.net_tool.server.tcp import listen as tcp_listen
+from basic.net_tool.server.tcp import connect as tcp_connect
 
 
 @click.group("netstat", help="netstat help...")
@@ -21,8 +22,8 @@ def listen(host: str, port: int):
     tcp_listen(host, port)
 
 
-@netstat.command("validator", help="nestat listen...")
+@netstat.command("connect", help="check if a network is open")
 @click.option("-H", "--host", type=str, help="host name")
 @click.option("-P", "--port", type=int, help="port number")
-def validator(host: str, port: int):
-    pass
+def connect(host: str, port: int):
+    tcp_connect(host, port)

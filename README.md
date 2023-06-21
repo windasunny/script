@@ -9,6 +9,11 @@ This script is only compatible with Linux and Unix-like systems. Please adjust a
 
 ### Installing
 
+requirement
+```
+    make requirement
+```
+
 ### Running
 
 ```
