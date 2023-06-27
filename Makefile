@@ -2,10 +2,10 @@
 install:
 	pip3 install -r requirements.txt
 
-commit
+commit:
 	codegpt commit
 
-commit-pre
+commit-pre:
 	codegpt commit --preview
 
 pre-commit:

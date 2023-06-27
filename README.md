@@ -20,6 +20,21 @@ requirement
     python3 main.py -h
 ```
 
+### Usage
+
+#### Netstat
+show all connected host:port
+```
+    python3 main.py netstat list  # just can use in Linux OS
+```
+
+##### TCP package
+listen or check if a host:port is active.
+```
+    python3 main.py tcp connect -H {host} -P {port}
+    python3 main.py tcp listen -H {host} -P {port}
+```
+
 ### Contribution
 
 If you have any questions, suggestions, or improvements, please open an Issue or contact me.
