@@ -1,5 +1,7 @@
 import socket
 import threading
+import time
+
 
 #  test server, send data, and fuzz
 
@@ -15,13 +17,22 @@ def proxy(host, port):
 
 
 def connect(host, port):
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.settimeout(2)
     try:
-        s.connect((host, 22))
-        return True
-    except socket.error:
-        return False
+        boolean = True
+        while boolean:
+            time.sleep(1)
+            server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            server.settimeout(2)
+            response = server.connect_ex((host, port))
+            if response == 0:
+                print(f"[*] Connect success to {host}:{port}")
+            else:
+                print(f"[*] Connect failed to {host}:{port}")
+    except KeyboardInterrupt:
+        print("[*] Closing server...")
+        server.close()
+        print("[*] Server closed")
+        boolean = False
 
 
 def listen(host, port):
