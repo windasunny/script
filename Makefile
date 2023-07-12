@@ -11,6 +11,8 @@ commit-pre:
 pre-commit:
 	pre-commit run
 
+shell:
+	poetry shell
 
 # 預設目標
 .DEFAULT_GOAL := install

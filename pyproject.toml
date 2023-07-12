@@ -9,3 +9,19 @@ version_files = [
     "pyproject.toml:version",
     "__init__.py"
 ]
+
+[tool.poetry]
+name = "script"
+version = "0.1.0"
+description = ""
+authors = ["Sunny Tsai <windasunny011725@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+click = "^8.1.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
