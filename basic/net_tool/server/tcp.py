@@ -27,31 +27,35 @@ def connect(host, port):
             if response == 0:
                 print(f"[*] Connect success to {host}:{port}")
             else:
-                print(f"[*] Connect failed to {host}:{port}")
+                print(f"[-] Connect failed to {host}:{port}")
     except KeyboardInterrupt:
-        print("[*] Closing server...")
+        print("[-] Closing server...")
         server.close()
-        print("[*] Server closed")
+        print("[-] Server closed")
         boolean = False
 
 
 def listen(host, port):
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind((host, port))
-
-    server.listen(5)
-    print(f"[*] Listen on {host}:{port}")
-
     try:
+        server.bind((host, port))
+
+        server.listen(5)
+        print(f"[*] Listen on {host}:{port}")
+
         while True:
             client, address = server.accept()
             print(f"[*] Accepted connection from {address[0]:{address[1]}}")
             client_handler = threading.Thread(target=handle_client, args=(client,))
             client_handler.start()
+
     except KeyboardInterrupt:
-        print("[*] Closing server...")
+        print("[-] Closing server...")
         server.close()
-        print("[*] Server closed")
+        print("[-] Server closed")
+
+    except socket.error as e:
+        print("[-] Failed to bind: " + str(e))
 
 
 def handle_client(client_socket):
